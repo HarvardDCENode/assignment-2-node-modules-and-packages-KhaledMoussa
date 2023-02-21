@@ -2,7 +2,7 @@ var mime = function(){
 
   return
   {
-    log : function(extname){
+    log = function(extname){
     const mimeTypes = {
       'html' : "text/html",
       'css'  : "text/css",
@@ -17,4 +17,4 @@ var mime = function(){
 }
 }
 
-modules.exports = mime;
+module.exports = mime;

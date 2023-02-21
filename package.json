@@ -1,0 +1,14 @@
+{
+  "name": "assignment-2-node-modules-and-packages-khaledmoussa-main",
+  "version": "1.0.0",
+  "description": "Dependencies for assignment 2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "khaled moussa",
+  "license": "ISC",
+  "dependencies": {
+    "log-util": "^2.3.0"
+  }
+}

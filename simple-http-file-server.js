@@ -5,25 +5,30 @@ const http = require('http');
 const url = require('url');
 const path = require('path');
 const fs = require('fs');
+var mime = require('./mime')();
 
 var server = http.createServer((req, res) => {
 	console.log(req.url);
 
-	const mimeTypes = {
-    'html' : "text/html",
-    'css'  : "text/css",
-    'js'   : "text/javascript",
-    'png'  : "image/png",
-    'jpg'  : "image/jpg"
-  };
+	// const mimeTypes = {
+  //   'html' : "text/html",
+  //   'css'  : "text/css",
+  //   'js'   : "text/javascript",
+  //   'png'  : "image/png",
+  //   'jpg'  : "image/jpg"
+  // };
 
 	// parse the URL into its component parts
 	console.log(`Requested URL: ${req.url}`);
+	let parsedUrl1= url.parse(req.url, true);
 	let parsedUrl;
-	try {   
+
+	try {
 		parsedUrl = new URL(req.url, `http://${req.headers.host}`);
 		console.log(parsedUrl);
-	} catch (e) { 
+		let query = parsedUrl1.query;
+		console.log(query);
+	} catch (e) {
 		console.log(`URL parse error: ${e}`);
 		res.writeHead(400);
 		res.end("Error 400: Bad Request");
@@ -39,7 +44,7 @@ var server = http.createServer((req, res) => {
 	// Extract the filename extension
 	//  then set the mimetype if it is known
   var extname = String(path.extname(pathname)).toLowerCase();
-  contentType = mimeTypes[extname] || contentType;
+  contentType = mime[extname]; || contentType;
 
 	// Create an absolute path to the requested file.
 	// Assume the server was started from the webroot
@@ -72,6 +77,7 @@ var server = http.createServer((req, res) => {
 	      }
 	    } else {
 		    // If we get to here, 'data' should contain the contents of the file
+
 				res.writeHead(200, contentType);
 				res.end(data, 'binary', ()=>{
 					console.log("file delivered: " + pathname);
